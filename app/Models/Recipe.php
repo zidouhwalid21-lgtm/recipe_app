@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Recipe extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id','title','ingredients','photo_path'
+    ];
+
+    public function User(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

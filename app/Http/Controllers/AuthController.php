@@ -29,7 +29,7 @@ class AuthController extends Controller
         $user=User::create($validated);
         Auth::login($user);
 
-        return redirect()->route('recipe');
+        return redirect()->route('dashboard');
     }
 
     public function login(Request $request){
@@ -40,7 +40,7 @@ class AuthController extends Controller
          if(Auth::attempt($validated)){
             $request->session()->regenerate();
 
-            return redirect()->route('recipe');
+            return redirect()->route('dashboard');
          }
 
          throw ValidationException::withMessages([
@@ -58,6 +58,6 @@ class AuthController extends Controller
         //so the previous token doesnt be used again for security
         //$request->session()->regenerateToken();
 
-        return redirect()->route('show.login');
+        return redirect()->route('home');
     }
 }

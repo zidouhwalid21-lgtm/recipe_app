@@ -1,31 +1,45 @@
+{{-- <x-layout>
+    <h2>User Interface</h2>
+    <p>User see their posts here!</p>
+    <hr>
+    <div>
+        @foreach ($recipes as $recipe )
+        <figure>
+            <img src="{{ asset('storage/'. $recipe->photo_path) }}" alt="recipe-image" width="150px" height="150px">
+            <figcaption>
+                <strong>Title {{ $recipe['title'] }}</strong>
+                <strong><a href="userSelectPost-recipes/{{ $recipe['id'] }}">View Details</a></strong>
+            </figcaption>
+            <a href="userEditPost-recipes/{{ $recipe['id'] }}">Edit</a>
+            <form action="{{ route('recipes.delete', $recipe->id) }}" method="post">
+                @csrf
+                @method('DELETE')
+            <button type="submit">
+                Delete
+            </button>
+            </form>
+        </figure>
+        @endforeach
+    </div>
+</x-layout> --}}
 <x-layout>
-    <!-- Optional: Include Bootstrap CSS if not already in your layout -->
-    @push('styles')
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    @endpush
-
-    <div class="container py-5">
-        <!-- Hero Banner -->
-        <div class="text-center mb-5">
-            <h1 class="display-5 fw-bold text-primary">Discover Delicious Recipes</h1>
-            <p class="lead text-muted mt-3">
-                Homemade meals, chef-inspired dishes, and quick fixes for busy days — all in one place.
-            </p>
-            <div class="mt-4">
-                <a href="/recipes" class="btn btn-outline-primary me-2">Browse All Recipes</a>
-                @guest
-                    <a href="/register" class="btn btn-primary">Join to Save Favorites</a>
-                @endguest
-            </div>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>My Recipes</h2>
+            <a href="{{ route('recipes.create') }}" class="btn btn-primary">+ Add New Recipe</a>
+            <a href="{{ route('home') }}" class="btn btn-primary">Home</a>
         </div>
+        <p class="text-muted">Manage your personal recipes here.</p>
+        <hr>
 
-        <!-- Featured Recipes -->
-        <section class="mb-5">
-            <h2 class="text-center mb-4 fw-bold">Featured Recipes</h2>
-            <p class="text-center text-muted">Loved by our community this week</p>
-
+        @if($recipes->isEmpty())
+            <div class="text-center py-5">
+                <p class="text-muted">You haven't created any recipes yet.</p>
+                <a href="{{ route('recipes.create') }}" class="btn btn-outline-primary">Create Your First Recipe</a>
+            </div>
+        @else
             <div class="row g-4">
-               @foreach($recipes as $recipe)
+                @foreach($recipes as $recipe)
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 shadow-sm">
                             <!-- Recipe Image -->
@@ -48,7 +62,6 @@
 
                                 <div class="mt-auto">
                                     <a href="{{ route('recipes.show', $recipe['id']) }}" class="btn btn-sm btn-outline-primary">View</a>
-                                    @auth
                                     <a href="{{ route('recipes.edit', $recipe['id']) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
 
                                     <form 
@@ -61,29 +74,12 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                     </form>
-                                    @endauth
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-
-            <div class="text-center mt-4">
-                <a href="/recipes" class="text-primary text-decoration-none">See all recipes →</a>
-            </div>
-        </section>
-
-        <!-- Call to Action -->
-        <div class="text-center p-4 bg-light rounded">
-            <p class="mb-0">
-                🍳 <strong>Create an account</strong> to save your favorite recipes, rate dishes, and share your own creations!
-            </p>
-        </div>
+        @endif
     </div>
-
-    <!-- Optional: Bootstrap JS (only if you use dropdowns/modals later) -->
-    @push('scripts')
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    @endpush
 </x-layout>

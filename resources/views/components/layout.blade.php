@@ -27,6 +27,10 @@
                     <strong>Name:</strong> {{ Auth::user()->name }}<br>
                     <strong>Email:</strong> {{ Auth::user()->email }}
                 </div>
+                <div>
+                    <strong><a href="{{ route('recipes.create') }}"> Create Recipe</a></strong>
+                    <strong><a href="{{ route('recipes.index') }}"> User Interface</a></strong>
+                </div>
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                     @csrf
                     <button type="submit" class="btn btn-outline-danger btn-sm">Log out</button>
