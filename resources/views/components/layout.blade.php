@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auth App</title>
+    <title>{{ $title ?? 'Recipe App' }}</title>
 
     <!-- Bootstrap 5 CSS (via CDN) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,12 +15,13 @@
 </head>
 <body>
     <header class="container mb-4">
-        <h2>Welcome on board</h2>
+        <h2><a href="{{ route('home') }}" style="color:black ; text-decoration: none;">Welcome on board</a></h2>
         <nav>
             @guest  
                 <a href="{{ route('show.register') }}" class="btn btn-link">Register</a>
                 <a href="{{ route('show.login') }}" class="btn btn-link">Login</a>
             @endguest
+                        
 
             @auth 
                 <div class="mb-2">

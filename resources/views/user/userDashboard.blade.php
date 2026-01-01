@@ -22,12 +22,11 @@
         @endforeach
     </div>
 </x-layout> --}}
-<x-layout>
+<x-layout title="My Recipes">
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>My Recipes</h2>
             <a href="{{ route('recipes.create') }}" class="btn btn-primary">+ Add New Recipe</a>
-            <a href="{{ route('home') }}" class="btn btn-primary">Home</a>
         </div>
         <p class="text-muted">Manage your personal recipes here.</p>
         <hr>

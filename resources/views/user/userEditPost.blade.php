@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Edit my Recipe">
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Edit Recipe</h2>
@@ -69,7 +69,7 @@
 
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-success">Update Recipe</button>
-                <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-outline-secondary">Cancel</a>
+                <a href="{{ route('home') }}" class="btn btn-outline-secondary">Cancel</a>
             </div>
         </form>
     </div>

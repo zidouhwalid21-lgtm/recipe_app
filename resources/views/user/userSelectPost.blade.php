@@ -7,7 +7,8 @@
     </div>
 </x-layout> --}}
 
-<x-layout>
+<x-layout title="{{ $recipe->title }} Recipe">
+
     <div class="container py-4">
         <h1>{{ $recipe->title }}</h1>
         <a href="{{ route('recipes.index') }}" class="btn btn-sm btn-outline-secondary mb-4">← Back to Recipes</a>
@@ -31,6 +32,7 @@
             <div>
                 <h5>Ingredients</h5>
                 <p class="mb-0">{{ $recipe->ingredients }}</p>
+                <p><strong>Author:</strong> {{ $recipe->user->name }}</p>
             </div>
         </div>
     </div>

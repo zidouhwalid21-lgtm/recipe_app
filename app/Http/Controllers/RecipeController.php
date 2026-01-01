@@ -14,7 +14,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $recipes=Recipe::get();
+        $recipes=Recipe::where('user_id',auth()->id())->latest()->get();
         return view('user.userDashboard', ['recipes'=>$recipes]);
     }
 
@@ -53,7 +53,7 @@ class RecipeController extends Controller
      */
     public function show(string $id)
     {
-        $recipes=Recipe::findOrFail($id);
+        $recipes=Recipe::with('user')->findOrFail($id);
         return view('user.userSelectPost',['recipe'=>$recipes]);
     }
 
@@ -63,6 +63,9 @@ class RecipeController extends Controller
     public function edit(string $id)
     {
         $recipes=Recipe::findOrFail($id);
+        if($recipes->user_id!==auth()->id()){
+            return abort(403 ,'access denied!');
+        }
         return view('user.userEditPost',['recipe'=>$recipes]);
     }
 
@@ -96,6 +99,9 @@ class RecipeController extends Controller
     public function destroy(string $id)
     {
         $recipe=Recipe::findOrFail($id);
+        if($recipe->user_id!==auth()->id()){
+            return abort(403, 'access denied');
+        }
         if($recipe->photo_path){
             Storage::disk('public')->delete($recipe->photo_path);
         }

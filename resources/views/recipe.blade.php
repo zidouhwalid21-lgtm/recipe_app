@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Recipe Blog">
     <!-- Optional: Include Bootstrap CSS if not already in your layout -->
     @push('styles')
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,10 +12,15 @@
                 Homemade meals, chef-inspired dishes, and quick fixes for busy days — all in one place.
             </p>
             <div class="mt-4">
-                <a href="/recipes" class="btn btn-outline-primary me-2">Browse All Recipes</a>
                 @guest
+                <a href="/login" class="btn btn-outline-primary me-2">Browse All Recipes</a>
+                
                     <a href="/register" class="btn btn-primary">Join to Save Favorites</a>
                 @endguest
+                @auth
+                <a href="/fullRecipes-user" class="btn btn-outline-primary me-2">Browse All Recipes</a>
+
+                @endauth
             </div>
         </div>
 
@@ -48,7 +53,7 @@
 
                                 <div class="mt-auto">
                                     <a href="{{ route('recipes.show', $recipe['id']) }}" class="btn btn-sm btn-outline-primary">View</a>
-                                    @auth
+                                    {{-- @auth
                                     <a href="{{ route('recipes.edit', $recipe['id']) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
 
                                     <form 
@@ -61,7 +66,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                     </form>
-                                    @endauth
+                                    @endauth --}}
                                 </div>
                             </div>
                         </div>
@@ -70,7 +75,7 @@
             </div>
 
             <div class="text-center mt-4">
-                <a href="/recipes" class="text-primary text-decoration-none">See all recipes →</a>
+                <a href="fullRecipes" class="text-primary text-decoration-none">See all recipes →</a>
             </div>
         </section>
 

@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Create Recipe">
     <div class="container py-4">
         <h2 class="mb-4">Create a New Recipe</h2>
         <hr class="mb-4">
@@ -42,7 +42,7 @@
                     id="photo_path" 
                     name="photo_path" 
                     class="form-control @error('photo_path') is-invalid @enderror"
-                    accept="image/jpeg,image/png,image/gif"
+                    accept="image/jpeg,image/png,image/gif, image/webp"
                 >
                 @error('photo_path')
                     <div class="invalid-feedback">{{ $message }}</div>
