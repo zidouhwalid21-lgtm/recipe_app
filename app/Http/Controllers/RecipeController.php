@@ -33,8 +33,18 @@ class RecipeController extends Controller
     {
         $validated=$request->validate([
             'title'=>'required|string|max:255',
-            'ingredients'=>'required|string|max:500',
+            'description'=>'required|string|max:1000',
+            'ingredients'=>'required|string',
             'photo_path'=>'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'is_halal'=>'nullable|boolean',
+            'is_vegan'=>'nullable|boolean',
+            'is_vegetarian'=>'nullable|boolean',
+            'is_gluten_free'=>'nullable|boolean',
+            'recipe_category'=>'required|string|in:main,dessert,breakfast,bread,appetizer,soup,beverage,snack,ice_cream',
+            'prep_time_minutes'=>'nullable|integer|min:1|max:1440',
+            'difficulty'=>'required|string|in:easy,medium,hard',
+            'occasion'=>'required|string|in:eid,ramadan,family,wedding,party,everyday,special,anniversary',
+            'cuisine'=>'required|string',
         ]);
         if($request->hasFile('photo_path')){
             $validated['photo_path']=$request->file('photo_path')->store('recipe','public');
@@ -77,17 +87,23 @@ class RecipeController extends Controller
         $recipe= Recipe::findOrFail($id);
         $validated=$request->validate([
             'title'=>'required|string|max:255',
-            'ingredients'=>'required|string|max:500',
+            'description'=>'required|string|max:1000',
+            'ingredients'=>'required|string',
             'photo_path'=>'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'is_halal'=>'nullable|boolean',
+            'is_vegan'=>'nullable|boolean',
+            'is_vegetarian'=>'nullable|boolean',
+            'is_gluten_free'=>'nullable|boolean',
+            'recipe_category'=>'required|string|in:main,dessert,breakfast,bread,appetizer,soup,beverage,snack,ice_cream',
+            'prep_time_minutes'=>'nullable|integer|min:1|max:1440',
+            'difficulty'=>'required|string|in:easy,medium,hard',
+            'occasion'=>'required|string|in:eid,ramadan,family,wedding,party,everyday,special,anniversary',
+            'cuisine'=>'required|string',
+
         ]);
         if($request->hasFile('photo_path')){
             $validated['photo_path']=$request->file('photo_path')->store('recipe','public');
-        }else if(! $request->file('photo_path')->isValid()){
-            throw ValidationException::withMessages([
-                'photo_path'=>"Photo Upload Failed, try again !"
-            ]);
         }
-            $validated['user_id']=Auth::id();
             $recipe->update($validated);
             return redirect()->route('recipes.index')->with('success', 'Recipe updated well!');
 

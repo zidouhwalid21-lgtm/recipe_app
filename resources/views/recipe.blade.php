@@ -30,7 +30,7 @@
             <p class="text-center text-muted">Loved by our community this week</p>
 
             <div class="row g-4">
-               @foreach($recipes as $recipe)
+               {{-- @foreach($recipes as $recipe)
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 shadow-sm">
                             <!-- Recipe Image -->
@@ -67,16 +67,73 @@
                                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                     </form>
                                     @endauth --}}
-                                </div>
+                               {{-- </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @endforeach --}}
+                @foreach($recipes as $recipe)
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            @if($recipe->photo_path)
+                <img
+                    src="{{ asset('storage/' . $recipe->photo_path) }}"
+                    alt="{{ $recipe->title }}"
+                    class="card-img-top"
+                    style="height: 160px; object-fit: cover;"
+                >
+            @else
+                <div class="bg-light d-flex align-items-center justify-content-center" style="height:160px;">
+                    <span class="text-muted">No image</span>
+                </div>
+            @endif
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ Str::limit($recipe->title, 30) }}</h5>
+                
+                {{-- Short description with ... if truncated --}}
+                @if($recipe->description)
+                    <p class="text-muted small mb-2">
+                        {{ Str::limit($recipe->description, 80) }}
+                    </p>
+                @endif
+
+                {{-- Author name --}}
+                <p class="text-muted small mb-2">
+                    <strong>By:</strong> <a href="{{ route('showUserProfile', $recipe['user_id']) }}">{{ $recipe->user->name ?? 'Anonymous' }}</a>
+                </p>
+
+                {{-- Your existing ingredients parsing (kept as comment or logic) --}}
+                {{-- 
+                <ul>
+                    @php
+                        $raw = trim($recipe->ingredients);
+                        $items = preg_split('/[\n,;]+/', $raw);
+                        $items = array_filter(array_map('trim', $items), function($item) {
+                            return !empty($item);
+                        });
+                    @endphp
+                    @if(count($items))
+                        @foreach($items as $item)
+                            <li>{{ $item }}</li>
+                        @endforeach
+                    @else
+                        <li>No ingredients listed.</li>
+                    @endif
+                </ul>
+                --}}
+
+                <div class="mt-auto">
+                    <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-sm btn-outline-primary w-100">
+                        View Recipe
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
             </div>
 
-            <div class="text-center mt-4">
-                <a href="fullRecipes" class="text-primary text-decoration-none">See all recipes →</a>
-            </div>
+            
         </section>
 
         <!-- Call to Action -->

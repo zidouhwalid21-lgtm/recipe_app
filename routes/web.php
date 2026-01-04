@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function(){
     Route::post('/logout', [AuthController::class,'logout'])->name('logout');
     Route::get('/home', [DashboardController::class , 'index'])->name('dashboard');
     Route::get('/fullRecipes-user', [DashboardController::class , 'showAllRecipes'])->name('showAllRecipes.auth');
+    Route::get('/user-profile-recipes/{id}', [DashboardController::class , 'showUserProfile'])->name('showUserProfile');
     Route::get('/user-recipes',[RecipeController::class, 'index'])->name('recipes.index');
     Route::get('/userCreatePost-recipes',[RecipeController::class, 'create'])->name('recipes.create');
     Route::post('/userStorePost-recipes',[RecipeController::class, 'store'])->name('recipes.store');

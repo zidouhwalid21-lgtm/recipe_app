@@ -9,7 +9,16 @@ class Recipe extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id','title','ingredients','photo_path'
+        'user_id','title','ingredients','photo_path','description',
+                'is_vegetarian',
+                'is_vegan',
+                'is_halal',
+                'recipe_category',
+                'is_gluten_free',
+                'prep_time_minutes',
+                'difficulty',
+                'cuisine',
+                'occasion',
     ];
 
     public function User(){
