@@ -7,9 +7,9 @@
         <label for="email">Email:</label>
         <input type="email" name="email" required value="{{old('email')}}">
         <label for="password">Password:</label>
-        <input type="password" name="password" require>
+        <input type="password" name="password" required>
         <button type="submit">Log In</button>
-
+        {!! NoCaptcha::renderJs() !!}
         <!-- Validation errors -->
          @if($errors->any())
             <ul>
@@ -18,5 +18,13 @@
                 @endforeach
             </ul>
         @endif
+        {!! NoCaptcha::display(['data-theme'=>'dark']) !!}
+        <hr/>
+        @if($errors->has('g-recaptcha-response'))
+            <span class="help-block">
+                <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+            </span>
+        @endif
+
     </form>
 </x-layout>

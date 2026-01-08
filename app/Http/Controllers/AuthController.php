@@ -36,8 +36,9 @@ class AuthController extends Controller
          $validated= $request->validate([
             'email' =>'required|email',
             'password' =>'required|string',
+            'g-recaptcha-response'=>'required|captcha'
          ]);
-         if(Auth::attempt($validated)){
+         if(Auth::attempt($request->only('email','password'))){
             $request->session()->regenerate();
 
             return redirect()->intended(route('dashboard'));
