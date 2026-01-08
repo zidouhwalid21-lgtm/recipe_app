@@ -40,7 +40,7 @@ class AuthController extends Controller
          if(Auth::attempt($validated)){
             $request->session()->regenerate();
 
-            return redirect()->route('dashboard');
+            return redirect()->intended(route('dashboard'));
          }
 
          throw ValidationException::withMessages([
@@ -52,11 +52,11 @@ class AuthController extends Controller
         Auth::logout();
 
         //to delete all data u had once logging out
-        //$request->session()->invalidate();
+        $request->session()->invalidate();
 
         //to regenerate a token in the next login
         //so the previous token doesnt be used again for security
-        //$request->session()->regenerateToken();
+        $request->session()->regenerateToken();
 
         return redirect()->route('home');
     }
